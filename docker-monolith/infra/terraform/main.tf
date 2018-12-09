@@ -43,4 +43,4 @@ resource "google_compute_instance" "docker-reddit" {
     user        = "appuser"
     private_key = "${file(var.private_key_path)}"
   }
-} 
+}

@@ -8,4 +8,4 @@ KSolomin microservices repository
 2. Также описали в коде прототип для нашей инфраструктуры на основе Docker контейнеров (вспомнили тему IaC):
 a) Описали образ ОС с установленным докером с помощью Packer.
 b) С помощью кода Terraform сделали возможным поднятие VM (на основе этого Packer-образа) в GCP. Количество VM задается переменоой.
-c) Написали три плейбука Ansible для установки докера и pip, загрузки нашего Docker image, запуска на VM контейнера на основе Docker image. Для dynamic inventory используеьтся terraform-inventory.
+c) Написали три плейбука Ansible для установки докера и pip, загрузки нашего Docker image, запуска на VM контейнера на основе Docker image. Для dynamic inventory используется terraform-inventory.

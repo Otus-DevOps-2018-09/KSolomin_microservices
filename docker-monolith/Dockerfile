@@ -13,4 +13,3 @@ RUN cd /reddit && bundle install
 RUN chmod 0777 /start.sh
 
 CMD ["/start.sh"]
-
