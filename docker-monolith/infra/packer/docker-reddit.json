@@ -1,0 +1,32 @@
+{
+    "variables": {
+      "project_id": "",
+      "source_image_family": "",
+      "machine_type": "",
+      "image_description": "",
+      "disk_size": "",
+      "network": ""
+    },
+    "builders": [
+      {
+        "type": "googlecompute",
+        "project_id": "{{user `project_id`}}",
+        "image_name": "docker-reddit-{{timestamp}}",
+        "image_family": "docker-reddit",
+        "source_image_family": "{{user `source_image_family`}}",
+        "zone": "europe-west1-b",
+        "ssh_username": "appuser",
+        "machine_type": "{{user `machine_type`}}",
+        "image_description": "{{user `image_description`}}",
+        "disk_size": "{{user `disk_size`}}",
+        "network": "{{user `network`}}"
+      }
+    ],
+    "provisioners": [
+      {
+        "type": "shell",
+        "script": "packer/scripts/install-docker.sh",
+        "execute_command": "sudo {{.Path}}"
+      }
+    ]
+  }

@@ -1,0 +1,8 @@
+{
+    "project_id": "ID",
+    "source_image_family": "ubuntu-1604-lts",
+    "machine_type": "g1-small",
+    "image_description": "Image for building a reddit-like website.",
+    "disk_size": "10",
+    "network": "default"
+}

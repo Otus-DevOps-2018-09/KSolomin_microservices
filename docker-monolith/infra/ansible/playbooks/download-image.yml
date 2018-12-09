@@ -1,0 +1,12 @@
+---
+- name: Install docker-py and Download image
+  hosts: docker-reddit
+  become: true
+  tasks:
+    - name: Install docker-py
+      pip:
+        name: docker-py
+
+    - name: Download image
+      docker_image:
+        name: coloradobeetle/otus-reddit:1.0

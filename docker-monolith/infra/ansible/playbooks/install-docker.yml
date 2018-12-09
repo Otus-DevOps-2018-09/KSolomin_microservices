@@ -1,0 +1,7 @@
+---
+- name: Install Docker
+  hosts: docker-reddit
+  become: true
+  tasks:
+    - name: Install Docker
+      script: ./scripts/install-docker.sh
