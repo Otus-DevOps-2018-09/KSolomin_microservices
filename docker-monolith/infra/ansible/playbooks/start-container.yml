@@ -1,0 +1,11 @@
+---
+- name: Start container
+  hosts: docker-reddit
+  become: true
+  tasks:
+    - name: Start Reddit container
+      docker_container:
+        name: reddit
+        image: coloradobeetle/otus-reddit:1.0
+        ports:
+          - "9292:9292"

@@ -1,0 +1,16 @@
+REPOSITORY                   TAG                 IMAGE ID            CREATED              SIZE
+omnikostia/ubuntu-tmp-file   latest              bd67d4fe6c1e        About a minute ago   116MB
+ubuntu                       16.04               a51debf7e1eb        7 days ago           116MB
+pyserve                      latest              6b2b184de5b7        2 months ago         478MB
+server                       latest              030cdd3e5d93        3 months ago         154MB
+python                       3.7-slim            4c2534c95211        3 months ago         143MB
+nginx                        alpine              36f3464a2197        4 months ago         18.6MB
+hello-world                  latest              2cb0d9787c4d        4 months ago         1.85kB
+
+На основе выводов команды inspect для контейнера и образа видим следующее:
+
+Образ содержит ссылку на контейнер, на основе которого образ был создан. Образ - по сути снэпшот состояния этого контейнера. Его описание содержит в себе тэг, переменные окружения,
+короткую характеристику ОС, слоев, файловой системы.
+
+О контейнере хранится больше информации. Детально описано текущее состояние контейнера (например, не прибил ли его oomkiller, его pid и т.д.), сетевые настройки, примонтированные тома, файловая система.
+В целом контейнер - вполне себе самостоятельная операционная система.
