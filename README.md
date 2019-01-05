@@ -1,6 +1,48 @@
 # KSolomin_microservices
 KSolomin microservices repository
 
+Домашнее задание 15:
+
+Ответы на вопросы:
+1. Если запускать "docker run --network host -d nginx" несколько раз, контейнер поднимется только единожды. Это происходит, потому что первый запуск резервирует 80-ый порт хостовой машины, другие контйнеры уже не смогут на нем работать. 
+
+2. При запуске контейнера с network none теперь видим что создается новый network namespace:
+
+docker run -d --network none nginx
+12d5114418636d1183795f90b1984b591b5ddff3de859efbfc244a45d6ba557f
+...
+docker-user@docker-host:~$ sudo ip netns
+da8436629985
+default
+...
+docker-user@docker-host:~$ sudo ip netns exec da8436629985 ifconfig
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+А при запуске контейнера с network host создания нового namespace не происходит - используется default namespace.
+
+3. Вот сети, созданные в рамках задания, которые мы видим с docker host:
+
+sudo docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+3605ea08404b        back_net            bridge              local
+f43473e70d84        bridge              bridge              local
+38367c9fe382        front_net           bridge              local
+ba68257ac8e5        host                host                local
+ea7aa3485a8b        none                null                local
+
+4. Задать базовое имя проекта для docker-compose можно. Для этого нам нужно либо задать в ".env" файле переменную COMPOSE_PROJECT_NAME, либо вызывать "docker-compose up" с ключом "-p".
+
+5. По заданию с "*":
+а) Мы можем менять код приложения, но не пересобирать каждый раз образы, если в рамках docker-compose.override.yml примонтируем код с приложением как отдельный volume к контейнеру. Чтобы проверить эту гипотезу, я заливал views из ui репозитория на докер хост и чуть менял их, и затем монтировал в каталог /app/views приложения. 
+б) Изменять в docker-compose.override.yml выполняемую при старте конейнера команду очень просто - пишем в сервисе что-то вроде:
+command: "puma --debug -w 2"
+
 Домашнее задание 14:
 
 1. Первое задание с *:
