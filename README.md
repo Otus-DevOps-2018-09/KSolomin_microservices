@@ -1,6 +1,15 @@
 # KSolomin_microservices
 KSolomin microservices repository
 
+Домашнее задание 16:
+
+Задания с "*":
+
+1. Слак с Гитлабом сынтегрирован, можно проверить по ссылке:
+https://devops-team-otus.slack.com/messages/CDB4NHWN8/details/
+
+2. 
+
 Домашнее задание 15:
 
 Ответы на вопросы:
