@@ -1,0 +1,33 @@
+---
+- name: Add runner to GitLab CI
+  hosts: gitlab-ci
+  become: true
+  gather_facts: False
+  vars:
+    runner_name: gitlab-runner-1
+    gitlab_url: http://35.195.182.110
+    gitlab_token: -nMzQLcuuNmiYMsbqaLy
+    description: my-runner
+    gitlab_runner_tags: linux,xenial,ubuntu,docker
+    executor: docker
+    docker_image: alpine:latest
+
+  tasks:
+    - name: Add runner
+      docker_container:
+        name: '{{ runner_name }}'
+        image: gitlab/gitlab-runner:latest
+        volumes:
+          - /srv/gitlab-runner/config:/etc/gitlab-runner
+          - /var/run/docker.sock:/var/run/docker.sock
+        restart_policy: always
+      
+    - name: Register runner
+      command: docker exec '{{ runner_name }}' gitlab-runner register >
+        --non-interactive
+        --url '{{ gitlab_url }}'
+        --registration-token '{{ gitlab_token }}'
+        --description '{{ description }}'
+        --tag-list '{{ gitlab_runner_tags }}'
+        --executor '{{ executor }}'
+        --docker-image '{{ docker_image }}'
