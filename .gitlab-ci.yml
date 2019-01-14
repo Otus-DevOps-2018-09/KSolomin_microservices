@@ -39,17 +39,27 @@ deploy_dev_job:
     name: dev
     url: http://dev.example.com
 
-branch review:
+branch_review:
   stage: review
   script:
-    - echo "Deploy to $CI_ENVIRONMENT_SLUG"
+    - echo "Creating server for $CI_ENVIRONMENT_SLUG"
+    - gcloud compute instances create $CI_ENVIRONMENT_SLUG --machine-type f1-micro --image debian-9-stretch-v20181210 --zone europe-west1-b --boot-disk-size=10GB
   environment:
     name: branch/$CI_COMMIT_REF_NAME
     url: http://$CI_ENVIRONMENT_SLUG.example.com
+    on_stop: stop_review_vm
   only:
     - branches
   except:
     - master
+
+stop_review_vm:
+  stage: review
+  script: gcloud compute instances delete $CI_ENVIRONMENT_SLUG
+  when: manual
+  environment:
+    name: branch/$CI_COMMIT_REF_NAME
+    action: stop
 
 staging:
   stage: stage
