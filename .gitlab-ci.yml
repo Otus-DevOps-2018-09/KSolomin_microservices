@@ -57,7 +57,6 @@ branch_start_vm:
     - source /root/google-cloud-sdk/path.bash.inc
   script:
     - gcloud auth activate-service-account --key-file=$GCP_KEY
-    - gcloud --help
   environment:
     name: branch/$CI_COMMIT_REF_NAME
     url: http://$CI_ENVIRONMENT_SLUG.example.com
