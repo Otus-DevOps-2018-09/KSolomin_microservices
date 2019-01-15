@@ -55,7 +55,7 @@ branch_start_vm:
   before_script:
     # Let's assign variables
     - echo $GCP_KEY > ~/gcloud-service-key.json
-    - export GCP_KEY_PATH = ~/gcloud-service-key.json
+    - export GCP_KEY_PATH=~/gcloud-service-key.json
     # Lets's install gcloud SDK
     - curl https://sdk.cloud.google.com | bash
     - source /root/google-cloud-sdk/path.bash.inc
