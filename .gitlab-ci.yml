@@ -40,13 +40,10 @@ deploy_dev_job:
     url: http://dev.example.com
 
 branch_review:
+  image: paperhive/gcloud-tools:latest
   stage: review
   script:
-    - pwd
-    - whoami
-    - ifconfig
-    - echo "Creating server for $CI_ENVIRONMENT_SLUG"
-    - gcloud compute instances create $CI_ENVIRONMENT_SLUG --machine-type f1-micro --image debian-9-stretch-v20181210 --zone europe-west1-b --boot-disk-size=10GB
+    - gcloud --help
   environment:
     name: branch/$CI_COMMIT_REF_NAME
     url: http://$CI_ENVIRONMENT_SLUG.example.com
