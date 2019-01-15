@@ -54,9 +54,9 @@ branch_start_vm:
   stage: review
   before_script:
     - curl https://sdk.cloud.google.com | bash
-    - source ~/.bash_profile
-    - gcloud auth activate-service-account --key-file=$GCP_KEY
+    - exec -l $SHELL
   script:
+    - gcloud auth activate-service-account --key-file=$GCP_KEY
     - gcloud --help
   environment:
     name: branch/$CI_COMMIT_REF_NAME
