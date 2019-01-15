@@ -39,7 +39,7 @@ deploy_dev_job:
     name: dev
     url: http://dev.example.com
 
-branch review:
+branch_review:
   stage: review
   script: echo "Deploy to $CI_ENVIRONMENT_SLUG"
   environment:
@@ -52,8 +52,9 @@ branch review:
 
 branch_start_vm:
   image:
-    name: paperhive/gcloud-tools:latest
   stage: review
+  before_script:
+    - curl https://sdk.cloud.google.com | bash 
   script:
     - gcloud --help
   environment:
