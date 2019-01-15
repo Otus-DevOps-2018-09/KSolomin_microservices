@@ -13,7 +13,6 @@ variables:
 before_script:
   - cd reddit
   - bundle install
-  - export GCP_KEY=$GCP_KEY
 
 build_job:
   stage: build
@@ -54,11 +53,14 @@ branch_review:
 branch_start_vm:
   stage: review
   before_script:
+    # Let's assign variables
+    - echo $GCP_KEY > ~/gcloud-service-key.json
+    - export GCP_KEY_PATH = ~/gcloud-service-key.json
     # Lets's install gcloud SDK
     - curl https://sdk.cloud.google.com | bash
     - source /root/google-cloud-sdk/path.bash.inc
   script:
-    - gcloud auth activate-service-account --key-file=$GCP_KEY
+    - gcloud auth activate-service-account --key-file=$GCP_KEY_PATH
     - uname -r
     # Let's install docker and docker-machine
 
