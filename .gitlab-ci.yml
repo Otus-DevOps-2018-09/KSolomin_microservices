@@ -70,7 +70,7 @@ branch_start_vm:
   environment:
     name: branch/$CI_COMMIT_REF_NAME
     url: http://$CI_ENVIRONMENT_SLUG.example.com
-    on_stop: stop_review_vm
+    on_stop: delete_review_vm
   only:
     - branches
   except:
