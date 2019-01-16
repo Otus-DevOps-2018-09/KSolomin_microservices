@@ -61,11 +61,13 @@ branch_start_vm:
     - source /root/google-cloud-sdk/path.bash.inc
   script:
     - gcloud auth activate-service-account --key-file=$GCP_KEY_PATH
-    - gcloud compute instances create ${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHA} 
-      --machine-type f1-micro
-      --zone europe-west1-b 
-      --boot-disk-size=10GB
-      --google-machine-image=ubuntu-os-cloud/global/images/family/ubuntu-1604-lts
+    - curl https://get.docker.com/ | bash
+    - docker -v
+    # - gcloud compute instances create ${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHA} 
+    #  --machine-type f1-micro
+    #  --zone europe-west1-b 
+    #  --boot-disk-size=10GB
+    #  --google-machine-image=ubuntu-os-cloud/global/images/family/ubuntu-1604-lts
   environment:
     name: branch/$CI_COMMIT_REF_NAME
     url: http://$CI_ENVIRONMENT_SLUG.example.com
