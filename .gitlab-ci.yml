@@ -61,10 +61,12 @@ branch_start_vm:
     - source /root/google-cloud-sdk/path.bash.inc
   script:
     - gcloud auth activate-service-account --key-file=$GCP_KEY_PATH
-    - uname -r
-    # Let's install docker and docker-machine
-    - docker -v
-    
+    - gcloud compute instances create ${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHA} 
+      --machine-type f1-micro
+      --zone europe-west1-b 
+      --boot-disk-size=10GB
+      --google-machine-image=ubuntu-os-cloud/global/images/family/ubuntu-1604-lts
+
   environment:
     name: branch/$CI_COMMIT_REF_NAME
     url: http://$CI_ENVIRONMENT_SLUG.example.com
@@ -74,13 +76,19 @@ branch_start_vm:
   except:
     - master
 
-stop_review_vm:
+delete_review_vm:
   stage: review
-  script: gcloud compute instances delete $CI_ENVIRONMENT_SLUG
+  before_script:
+    # Let's assign variables
+    - echo $GCP_KEY > ~/gcloud-service-key.json
+    - export GCP_KEY_PATH=~/gcloud-service-key.json
+    # Lets's install gcloud SDK
+    - curl https://sdk.cloud.google.com | bash
+    - source /root/google-cloud-sdk/path.bash.inc
+  script: 
+    - gcloud auth activate-service-account --key-file=$GCP_KEY_PATH
+    - gcloud compute instances delete ${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHA}
   when: manual
-  environment:
-    name: branch/$CI_COMMIT_REF_NAME
-    action: stop
 
 staging:
   stage: stage
