@@ -16,8 +16,18 @@ before_script:
 
 build_job:
   stage: build
+  before_script:
+    # Let's install Docker
+    - curl https://get.docker.com/ | bash
+    - docker -v
   script:
+    # Let's build a container
     - echo 'Building'
+    - cd ../docker-monolith
+    - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+    - docker build -t reddit_app:latest .
+    - docker tag reddit_app:latest $USERNAME/reddit_app:1.0
+    - docker push $USERNAME/reddit_app:1.0
 
 test_unit_job:
   stage: test
@@ -70,10 +80,10 @@ branch_start_vm:
     # Let's start a machine and deploy container
     - docker-machine create --driver google 
       --google-machine-type f1-micro
-      --google-zone=europe-west1-b 
+      --google-zone europe-west1-b 
       --google-disk-size 10
-      --google-machine-image=ubuntu-os-cloud/global/images/family/ubuntu-1604-lts
-      --google-project=$GCP_PROJECT
+      --google-machine-image ubuntu-os-cloud/global/images/family/ubuntu-1604-lts
+      --google-project $GCP_PROJECT
       ${CI_COMMIT_REF_SLUG}
 
   environment:
@@ -93,8 +103,9 @@ delete_review_vm:
     # Lets's install gcloud SDK
     - curl https://sdk.cloud.google.com | bash
     - source /root/google-cloud-sdk/path.bash.inc
-  script: 
     - gcloud auth activate-service-account --key-file=$GCP_KEY_PATH
+  script:
+    # Let's delete the machine
     - gcloud compute instances delete ${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHA}
   when: manual
   environment:
