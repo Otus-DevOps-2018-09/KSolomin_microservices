@@ -19,11 +19,10 @@ build_job:
   before_script:
     # Let's install Docker
     - curl https://get.docker.com/ | bash
-    - docker -v
   script:
     # Let's build a container
     - echo 'Building'
-    - cd ../docker-monolith
+    - cd docker-monolith
     - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
     - docker build -t reddit_app:latest .
     - docker tag reddit_app:latest $USERNAME/reddit_app:1.0
