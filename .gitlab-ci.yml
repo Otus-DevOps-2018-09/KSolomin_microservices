@@ -59,10 +59,14 @@ branch_start_vm:
     # Lets's install gcloud SDK
     - curl https://sdk.cloud.google.com | bash
     - source /root/google-cloud-sdk/path.bash.inc
-  script:
     - gcloud auth activate-service-account --key-file=$GCP_KEY_PATH
+  script:
+    # Let's install Docker & Docker-machine
     - curl https://get.docker.com/ | bash
     - docker -v
+    - base=https://github.com/docker/machine/releases/download/v0.16.0 &&
+      curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
+      sudo install /tmp/docker-machine /usr/local/bin/docker-machine
     # - gcloud compute instances create ${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHA} 
     #  --machine-type f1-micro
     #  --zone europe-west1-b 
