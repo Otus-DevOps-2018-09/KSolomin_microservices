@@ -22,7 +22,6 @@ build_job:
     # - curl https://get.docker.com/ | bash
 
     - cd docker-monolith
-    - ps -aux | grep docker
     - docker build -t reddit_app:latest .
     - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
     - docker tag reddit_app:latest $USERNAME/reddit_app:1.0
