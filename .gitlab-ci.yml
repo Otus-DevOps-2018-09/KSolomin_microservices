@@ -73,6 +73,7 @@ branch_start_vm:
       --google-zone=europe-west1-b 
       --google-disk-size 10
       --google-machine-image=ubuntu-os-cloud/global/images/family/ubuntu-1604-lts
+      --google-project=$GCP_PROJECT
       ${CI_COMMIT_REF_SLUG}
 
   environment:
