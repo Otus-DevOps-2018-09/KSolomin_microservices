@@ -17,7 +17,11 @@ before_script:
 build_job:
   image: docker:stable
   stage: build
+  # Remove
+  services:
+    - docker:dind
   before_script:
+  
     # Let's install Docker
     # - curl https://get.docker.com/ | bash
 
