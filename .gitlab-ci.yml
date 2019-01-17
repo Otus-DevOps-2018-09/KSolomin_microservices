@@ -19,7 +19,7 @@ build_job:
   stage: build
   before_script:
     # Let's install Docker
-    - curl https://get.docker.com/ | bash
+    # - curl https://get.docker.com/ | bash
   script:
     # Let's build a container
     - echo 'Building'
