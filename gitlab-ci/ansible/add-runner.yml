@@ -25,6 +25,7 @@
     - name: Register runner
       command: docker exec '{{ runner_name }}' gitlab-runner register >
         --non-interactive
+        --docker-privileged
         --url '{{ gitlab_url }}'
         --registration-token '{{ gitlab_token }}'
         --description '{{ description }}'

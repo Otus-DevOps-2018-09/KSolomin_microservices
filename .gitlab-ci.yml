@@ -26,8 +26,8 @@ build_job:
     - ps -aux | grep docker
     - docker build -t reddit_app:latest .
     - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-    - sudo docker tag reddit_app:latest $USERNAME/reddit_app:1.0
-    - sudo docker push $USERNAME/reddit_app:1.0
+    - docker tag reddit_app:latest $USERNAME/reddit_app:1.0
+    - docker push $USERNAME/reddit_app:1.0
 
 test_unit_job:
   stage: test
