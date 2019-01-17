@@ -23,10 +23,10 @@ build_job:
     # Let's build a container
     - echo 'Building'
     - cd docker-monolith
-    - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-    - docker build -t reddit_app:latest .
-    - docker tag reddit_app:latest $USERNAME/reddit_app:1.0
-    - docker push $USERNAME/reddit_app:1.0
+    - sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+    - sudo docker build -t reddit_app:latest .
+    - sudo docker tag reddit_app:latest $USERNAME/reddit_app:1.0
+    - sudo docker push $USERNAME/reddit_app:1.0
 
 test_unit_job:
   stage: test
