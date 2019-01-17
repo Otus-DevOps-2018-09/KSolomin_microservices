@@ -29,7 +29,7 @@ build_job:
     - docker push $USERNAME/reddit_app:1.0
   script:
     # Let's build a container
-    # - echo 'Building'
+    - echo 'Building'
     # - cd docker-monolith
     # - ps -aux | grep docker
     # - docker build -t reddit_app:latest .
