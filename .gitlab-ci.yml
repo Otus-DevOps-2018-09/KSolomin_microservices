@@ -28,7 +28,7 @@ build_job:
     - cd docker-monolith
     - docker build -t reddit_app:latest .
     - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-    - docker tag reddit_app:latest $USERNAME/reddit_app:1.0
+    - docker tag reddit_app:latest $DOCKER_USERNAME/reddit_app:1.0
     - docker push $USERNAME/reddit_app:1.0
   script:
     # Let's build a container
