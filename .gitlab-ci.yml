@@ -113,7 +113,7 @@ delete_review_vm:
     - gcloud auth activate-service-account --key-file=$GCP_KEY_PATH
   script:
     # Let's delete the machine
-    - gcloud compute instances delete ${CI_COMMIT_REF_SLUG} --zone=europe-west1-b
+    - gcloud compute instances delete ${CI_COMMIT_REF_SLUG} --zone=europe-west1-b --quiet
 
   when: manual
   environment:
