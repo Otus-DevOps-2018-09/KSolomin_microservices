@@ -16,8 +16,8 @@ before_script:
 
 build_job:
   stage: build
-  services:
-    - docker:dind
+  # services:
+  #  - docker:dind
   before_script:
     # Let's install Docker
     - curl https://get.docker.com/ | bash
@@ -69,12 +69,12 @@ branch_start_vm:
     - echo $GCP_KEY > ~/gcloud-service-key.json
     - export GCP_KEY_PATH=~/gcloud-service-key.json
     - export GOOGLE_APPLICATION_CREDENTIALS=~/gcloud-service-key.json
+    - export GOOGLE_PROJECT=$GCP_PROJECT
     # Lets's install gcloud SDK
     - curl https://sdk.cloud.google.com | bash
     - source /root/google-cloud-sdk/path.bash.inc
     - gcloud auth activate-service-account --key-file=$GCP_KEY_PATH
-    - export GOOGLE_PROJECT=$GCP_PROJECT
-    
+
   script:
     # Let's install Docker & Docker-machine
     - curl https://get.docker.com/ | bash
@@ -90,6 +90,8 @@ branch_start_vm:
       --google-machine-image  https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/family/ubuntu-1604-lts
       --google-project $GCP_PROJECT
       ${CI_COMMIT_REF_SLUG}
+    - eval $(docker-machine env ${CI_COMMIT_REF_SLUG})
+    - docker run -d -p 9292:9292 ${DOCKER_USERNAME}/reddit_app:1.0
 
   environment:
     name: branch/$CI_COMMIT_REF_NAME
@@ -105,13 +107,16 @@ delete_review_vm:
     # Let's assign variables
     - echo $GCP_KEY > ~/gcloud-service-key.json
     - export GCP_KEY_PATH=~/gcloud-service-key.json
+    - export GOOGLE_APPLICATION_CREDENTIALS=~/gcloud-service-key.json
+    - export GOOGLE_PROJECT=$GCP_PROJECT
     # Lets's install gcloud SDK
     - curl https://sdk.cloud.google.com | bash
     - source /root/google-cloud-sdk/path.bash.inc
     - gcloud auth activate-service-account --key-file=$GCP_KEY_PATH
   script:
     # Let's delete the machine
-    - gcloud compute instances delete ${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHA}
+    - gcloud compute instances delete ${CI_COMMIT_REF_SLUG} --zone=europe-west1-b
+
   when: manual
   environment:
     name: branch/$CI_COMMIT_REF_NAME
