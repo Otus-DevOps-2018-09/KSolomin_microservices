@@ -16,8 +16,6 @@ before_script:
 
 build_job:
   stage: build
-  # services:
-  #  - docker:dind
   before_script:
     # Let's install Docker
     - curl https://get.docker.com/ | bash
@@ -90,7 +88,7 @@ branch_start_vm:
       --google-machine-image  https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/family/ubuntu-1604-lts
       --google-project $GCP_PROJECT
       ${CI_COMMIT_REF_SLUG}
-    - eval $(docker-machine env ${CI_COMMIT_REF_SLUG})
+    - eval $(docker-machine env --shell bash ${CI_COMMIT_REF_SLUG})
     - docker run -d -p 9292:9292 ${DOCKER_USERNAME}/reddit_app:1.0
 
   environment:
