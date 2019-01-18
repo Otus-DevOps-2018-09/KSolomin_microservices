@@ -15,28 +15,21 @@ before_script:
   - bundle install
 
 build_job:
-  # image: docker:stable
   stage: build
   services:
     - docker:dind
   before_script:
-  
     # Let's install Docker
     - curl https://get.docker.com/ | bash
+
+  script:
+    # Let's build a container
+    - echo 'Building'
     - cd docker-monolith
     - docker build -t reddit_app:latest .
     - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
     - docker tag reddit_app:latest $DOCKER_USERNAME/reddit_app:1.0
     - docker push $DOCKER_USERNAME/reddit_app:1.0
-  script:
-    # Let's build a container
-    - echo 'Building'
-    # - cd docker-monolith
-    # - ps -aux | grep docker
-    # - docker build -t reddit_app:latest .
-    # - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-    # - docker tag reddit_app:latest $USERNAME/reddit_app:1.0
-    # - docker push $USERNAME/reddit_app:1.0
 
 test_unit_job:
   stage: test
@@ -75,10 +68,13 @@ branch_start_vm:
     # Let's assign variables
     - echo $GCP_KEY > ~/gcloud-service-key.json
     - export GCP_KEY_PATH=~/gcloud-service-key.json
+    - export GOOGLE_APPLICATION_CREDENTIALS=~/gcloud-service-key.json
     # Lets's install gcloud SDK
     - curl https://sdk.cloud.google.com | bash
     - source /root/google-cloud-sdk/path.bash.inc
     - gcloud auth activate-service-account --key-file=$GCP_KEY_PATH
+    - export GOOGLE_PROJECT=$GCP_PROJECT
+    
   script:
     # Let's install Docker & Docker-machine
     - curl https://get.docker.com/ | bash
@@ -91,7 +87,7 @@ branch_start_vm:
       --google-machine-type f1-micro
       --google-zone europe-west1-b 
       --google-disk-size 10
-      --google-machine-image ubuntu-os-cloud/global/images/family/ubuntu-1604-lts
+      --google-machine-image  https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/family/ubuntu-1604-lts
       --google-project $GCP_PROJECT
       ${CI_COMMIT_REF_SLUG}
 
