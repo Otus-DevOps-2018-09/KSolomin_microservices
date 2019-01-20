@@ -5,8 +5,8 @@
   gather_facts: False
   vars:
     runner_name: gitlab-runner-1
-    gitlab_url: http://35.195.182.110
-    gitlab_token: -nMzQLcuuNmiYMsbqaLy
+    gitlab_url: http://34.76.0.60
+    gitlab_token: E_btXLmZ1NFiNBLVziRY
     description: my-runner
     gitlab_runner_tags: linux,xenial,ubuntu,docker
     executor: docker
@@ -25,6 +25,7 @@
     - name: Register runner
       command: docker exec '{{ runner_name }}' gitlab-runner register >
         --non-interactive
+        --docker-privileged
         --url '{{ gitlab_url }}'
         --registration-token '{{ gitlab_token }}'
         --description '{{ description }}'
