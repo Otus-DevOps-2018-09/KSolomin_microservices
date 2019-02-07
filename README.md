@@ -1,6 +1,19 @@
 # KSolomin_microservices
 KSolomin microservices repository
 
+Домашнее задание 21:
+
+kubectl get pods
+NAME                                  READY   STATUS    RESTARTS   AGE
+busybox                               1/1     Running   0          11m
+busybox-bd8fb7cbd-lcwf8               1/1     Running   0          13m
+comment-deployment-579969646c-97vcm   1/1     Running   0          49s
+mongo-deployment-6895dffdf4-qgtsk     1/1     Running   0          40s
+nginx-dbddb74b8-wwnks                 1/1     Running   0          8m52s
+post-deployment-7b9d8cf89c-85967      1/1     Running   0          28s
+ui-deployment-84d7db56df-kttg5        1/1     Running   0          34s
+untrusted                             1/1     Running   0          3m53s
+
 Домашнее задание 18:
 
 Линка на докер хаб с образами:
