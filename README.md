@@ -1,8 +1,6 @@
 # KSolomin_microservices
 KSolomin microservices repository
 
-Домашнее задание 22:
-
 Домашнее задание 21:
 
 kubectl get pods

@@ -4,3 +4,5 @@ terraform.tfstate.backup
 variables.json
 .terraform/*
 .env
+tls.key
+tls.crt
