@@ -6,3 +6,4 @@ variables.json
 .env
 tls.key
 tls.crt
+Gitlab_ci
